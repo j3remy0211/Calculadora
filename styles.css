@@ -1,0 +1,26 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body  {
+    height: 100vh;
+    width: 100%;
+    background-color: hsl(185, 41%, 84%);
+    font-family: "Space Mono", monospace;
+}
+
+.Logo {
+    text-align: center;
+    margin-top: 1.7rem;
+    margin-bottom: 2.3rem;
+}
+
+.tip-calculator {
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    border-radius: 1.4rem 1.4rem 0 0;
+}
+
