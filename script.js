@@ -3,12 +3,18 @@ const peopleInput = document.querySelector(".people-input");
 const tipPerPerson = document.getElementById("tip-amount");
 const totalPerPerson = document.getElementById("total-amount");
 const tips = document.querySelector(".tips");
+const tipCustom = document.querySelector(".tip-custom");
+const resetBtn = document.querySelector(".reset");
+const error = document.querySelector(".error");
+
 
 billInput.addEventListener("input", billInputFun);
 peopleInput.addEventListener("input", peopleInputFun);
 tips.forEach(function(val) {
-    val.addEventListener('click', handleClick);
+    val.addEventListener("click", handleClick);
 });
+tipCustom.addEventListener("input", tipInputFun);
+resetBtn.addEventListener("click", reset);
 
 billInput.value = "0.0";
 peopleInput.value = "1";
@@ -26,6 +32,22 @@ function billInputFun() {
 
 function peopleInputFun() {
     peopleValue = parseFloat(peopleInput.value);
+
+    if(peopleValue < 1) {
+        error.style.display = "flex";
+        peopleInput.style.border = "thick solid red";
+    } else {
+        error.style.display = "none";
+        peopleInput.style.border = "none";
+        calculateTip();
+    }
+}
+
+function tipInputFun() {
+    tipValue = parserFloat(tipCustom.value / 100);
+    tips.forEach(function(val){
+        val.classList.remove("active-tip");
+    });
     calculateTip();
 }
 
@@ -49,3 +71,10 @@ function calculateTip() {
     }
 }
 
+function reset() {
+    billInput.value = "0.0";
+    billInputFun();
+    peopleInput.value = "1";
+    peopleInputFun();
+    tipCustom.value = 
+}
