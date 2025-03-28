@@ -71,3 +71,50 @@ input {
     cursor: pointer;
 }
 
+.active-tip {
+    color: hsl(183, 100%, 15%);
+    background-color: hsl(172, 67%, 45%);
+    font-weight: bolder;
+}
+
+.people-input {
+    background-image: url(images/icon-person.svg);
+    margin-bottom: 2.4rem;
+}
+
+.result {
+    background-color: hsl(183, 100%, 15%);
+    color: white;
+    padding: 39px 21px;
+    border-radius: 12px;
+}
+
+.tip-amount , .total {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.7rem;
+}
+
+.person {
+    font-size: 12px;
+    color: hsl(184, 14%, 56%);
+    font-weight: 700;
+}
+
+.amount {
+    font-size: 28px;
+    color: hsl(172, 67%, 45%);
+    font-weight: 700;
+}
+
+.reset {
+    text-align: center;
+    font-size: 20px;
+    font-weight: 700;
+    color: hsl(183, 100%, 15%);
+    background-color: hsl(172, 67%, 45%);
+    padding: 9px 0 9px 0;
+    border-radius: 5px;
+    cursor: pointer;
+}
