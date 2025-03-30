@@ -10,10 +10,11 @@ body  {
     font-family: 'Space Mono', monospace;
 }
 
-.Logo {
+.logo {
+    display: block;
+    margin-top: 30px;
+    margin-bottom: 30px;
     text-align: center;
-    margin-top: 1.7rem;
-    margin-bottom: 2.3rem;
 }
 
 .tip-calculator {
@@ -25,6 +26,7 @@ body  {
     max-width: 90%;
     width: 400px;
     margin: auto;
+    margin-top: 0px;
 }
 
 label {
@@ -198,18 +200,28 @@ input {
         padding: 13px 0 13px 0;
         margin-top: auto;
     }
+
+    .logo {
+        display: block;
+        margin-top: 30px;
+        margin-bottom: 30px;
+    }
 }
 
 @media screen and (max-width: 530px) {
     .tip-calculator {
+        width: min(400px, 90%);
         flex-direction: column;
         padding: 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     .result {
         width: 100%;
         margin-top: 1.5rem;
-        padding: 20px;
+        padding: 15px;
     }
 
     .amount {
@@ -219,4 +231,33 @@ input {
     input {
         width: 100%;
     }
+
+    .tip {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .tips {
+        flex: 1 1 45%;
+        max-width: 100px;
+    }
+
+    .logo {
+        display: block;
+        margin-top: 30px;
+        margin-bottom: 30px;
+    }
+
+    .bill-input {
+        padding: 5px;
+        width: 95%;
+    }
+
+    .people-input {
+        padding: 5px;
+        width: 95%;
+    }
 }
+
