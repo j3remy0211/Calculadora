@@ -128,6 +128,10 @@ input {
 #tip-custom input {
     box-sizing: border-box;
     width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }
 
 .peopleLabel {
@@ -261,3 +265,13 @@ input {
     }
 }
 
+@media screen and (max-width: 470px) {
+    .tip-calculator {
+        width: min(400px, 80%);
+        flex-direction: column;
+        padding: 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
