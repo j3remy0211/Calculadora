@@ -22,6 +22,9 @@ body  {
     flex-direction: column;
     padding: 2rem;
     border-radius: 1.4rem 1.4rem 0 0;
+    max-width: 90%;
+    width: 400px;
+    margin: auto;
 }
 
 label {
@@ -53,10 +56,11 @@ input {
 .tip {
     margin-top: 0.7rem;
     display: grid;
-    grid-template-columns: 144px 144px;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); 
     row-gap: 2rem;
     column-gap: 18px;
     margin-bottom: 2rem;
+    gap: 10px;
 }
 
 .tips {
@@ -134,7 +138,7 @@ input {
     display: none;
 }
 
-@media only screen and (min-width: 1000px) {
+@media only screen and (min-width: 1090px) {
     body {
         display: flex;
         flex-direction: column;
@@ -193,5 +197,26 @@ input {
     .reset {
         padding: 13px 0 13px 0;
         margin-top: auto;
+    }
+}
+
+@media screen and (max-width: 530px) {
+    .tip-calculator {
+        flex-direction: column;
+        padding: 1.5rem;
+    }
+
+    .result {
+        width: 100%;
+        margin-top: 1.5rem;
+        padding: 20px;
+    }
+
+    .amount {
+        font-size: 24px;
+    }
+
+    input {
+        width: 100%;
     }
 }
