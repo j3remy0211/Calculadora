@@ -25,12 +25,12 @@ let peopleValue = 1;
 let tipValue = 0.15;
 
 function billInputFun() {
-    billValue = parseFloat(billInput.value);
+    billValue = parseFloat(billInput.value) || 0;
     calculateTip();
 }
 
 function peopleInputFun() {
-    peopleValue = parseFloat(peopleInput.value);
+    peopleValue = parseFloat(peopleInput.value) || 1;
 
     if(peopleValue < 1) {
         error.style.display = "flex";
@@ -43,7 +43,7 @@ function peopleInputFun() {
 }
 
 function tipInputFun() {
-    tipValue = parseFloat(tipCustom.value) / 100;
+    tipValue = parseFloat(tipCustom.value) / 100 || 0;
     tips.forEach(function(val){
         val.classList.remove("active-tip");
     });
@@ -78,10 +78,20 @@ function reset() {
     tipCustom.value = "";
 }
 
+billInput.addEventListener("focus", function() {
+    billInput.placeholder = "";
+});
+
+billInput.addEventListener("blur", function() {
+    if (billInput.value.trim() === "") {
+        billInput.placeholder = "0.0";
+    }
+});
+
 tipCustom.addEventListener("focus", function() {
     tipCustom.placeholder = "";
 });
 
 tipCustom.addEventListener("blur", function() {
-    tipCustom.placeholder = "CUSTOM"; // Restaurar el placeholder si el campo está vacío
+    tipCustom.placeholder = "CUSTOM";
 });
