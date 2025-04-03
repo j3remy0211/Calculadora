@@ -17,8 +17,8 @@ resetBtn.addEventListener("click", reset);
 
 billInput.value = "0.0";
 peopleInput.value = "1";
-tipPerPerson.innerHTML =  "$" + (0.0).toFixed(2);
-totalPerPerson.innerHTML =  "$" + (0.0).toFixed(2);
+tipPerPerson.innerHTML = "$" + (0.0).toFixed(2);
+totalPerPerson.innerHTML = "$" + (0.0).toFixed(2);
 
 let billValue = 0.0;
 let peopleValue = 1;
@@ -26,15 +26,22 @@ let tipValue = 0.15;
 
 function billInputFun() {
     billValue = parseFloat(billInput.value) || 0;
+
+    if (billValue < 0) {
+        billValue = 0;
+        billInput.value = "0.0";
+    }
     calculateTip();
 }
 
 function peopleInputFun() {
-    peopleValue = parseFloat(peopleInput.value) || 1;
+    peopleValue = parseFloat(peopleInput.value) || 0;
 
-    if(peopleValue < 1) {
+    if (peopleValue < 1) {
         error.style.display = "flex";
         peopleInput.style.border = "thick solid red";
+        peopleValue = 1;
+        peopleInput.value = "1";
     } else {
         error.style.display = "none";
         peopleInput.style.border = "none";
@@ -42,20 +49,36 @@ function peopleInputFun() {
     }
 }
 
+function billInputFun() {
+    billValue = parseFloat(billInput.value) || 1;
+
+    if (billValue < 1) {
+        error.style.display = "flex";
+        billInput.style.border = "thick solid red";
+        billValue = 1;
+        billInput.value = "1";
+    } else {
+        error.style.display = "none";
+        billInput.style.border = "none";
+        calculateTip();
+    }
+}
+
+
 function tipInputFun() {
     tipValue = parseFloat(tipCustom.value) / 100 || 0;
-    tips.forEach(function(val){
+    tips.forEach(function(val) {
         val.classList.remove("active-tip");
     });
     calculateTip();
 }
 
 function handleClick(event) {
-    tips.forEach(function(val){
+    tips.forEach(function(val) {
         val.classList.remove("active-tip");
-        if(event.target.innerHTML == val.innerHTML) {
+        if (event.target.innerHTML == val.innerHTML) {
             val.classList.add("active-tip");
-            tipValue = parseFloat(val.innerHTML)/100;
+            tipValue = parseFloat(val.innerHTML) / 100;
         }
     });
     calculateTip();
@@ -66,7 +89,7 @@ function calculateTip() {
         let tipAmount = (billValue * tipValue) / peopleValue;
         let total = (billValue + tipAmount) / peopleValue;
         tipPerPerson.innerHTML = "$" + tipAmount.toFixed(2);
-        totalPerPerson.innerHTML =  "$" + total.toFixed(2);
+        totalPerPerson.innerHTML = "$" + total.toFixed(2);
     }
 }
 

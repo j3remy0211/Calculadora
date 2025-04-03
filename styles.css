@@ -175,6 +175,8 @@ input {
 
     .bill-input {
         margin-bottom: 3.4rem;
+        width: 95%;
+        padding: 5px;
     }
 
     .tip {
