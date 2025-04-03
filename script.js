@@ -7,83 +7,89 @@ const tipCustom = document.querySelector(".tip-custom");
 const resetBtn = document.querySelector(".reset");
 const error = document.querySelector(".error");
 
+// Eventos de entrada y clics
 billInput.addEventListener("input", billInputFun);
 peopleInput.addEventListener("input", peopleInputFun);
-tips.forEach(function(val) {
-    val.addEventListener("click", handleClick);
-});
+tips.forEach(val => val.addEventListener("click", handleClick));
 tipCustom.addEventListener("input", tipInputFun);
 resetBtn.addEventListener("click", reset);
 
-billInput.value = "0.0";
-peopleInput.value = "1";
+// Valores iniciales
+billInput.value = "";
+peopleInput.value = "";
+tipCustom.value = "";
 tipPerPerson.innerHTML = "$" + (0.0).toFixed(2);
 totalPerPerson.innerHTML = "$" + (0.0).toFixed(2);
 
-let billValue = 0.0;
+let billValue = 0;
 let peopleValue = 1;
 let tipValue = 0.15;
 
+// Validación para el input de bill
 function billInputFun() {
-    billValue = parseFloat(billInput.value) || 0;
-
-    if (billValue < 0) {
+    if (billInput.value.trim() === "") {
         billValue = 0;
-        billInput.value = "0.0";
+        
+    } else {
+        billValue = parseFloat(billInput.value);
+        billInput.classList.remove("error-input");
+        if (isNaN(billValue) || billValue < 0) {
+            billInput.classList.add("error-input");
+            billValue = 0;
+            billInput.value = "";
+        }
     }
+
     calculateTip();
 }
 
+// Validación para el número de personas
 function peopleInputFun() {
-    peopleValue = parseFloat(peopleInput.value) || 0;
+    if (peopleInput.value.trim() === "") return;
 
-    if (peopleValue < 1) {
-        error.style.display = "flex";
-        peopleInput.style.border = "thick solid red";
+    peopleValue = parseInt(peopleInput.value);
+    if (isNaN(peopleValue) || peopleValue < 1) {
+        peopleInput.classList.add("error-input");
         peopleValue = 1;
         peopleInput.value = "1";
     } else {
-        error.style.display = "none";
-        peopleInput.style.border = "none";
-        calculateTip();
+        peopleInput.classList.remove("error-input");
     }
+
+    calculateTip();
 }
 
-function billInputFun() {
-    billValue = parseFloat(billInput.value) || 1;
-
-    if (billValue < 1) {
-        error.style.display = "flex";
-        billInput.style.border = "thick solid red";
-        billValue = 1;
-        billInput.value = "1";
-    } else {
-        error.style.display = "none";
-        billInput.style.border = "none";
-        calculateTip();
-    }
-}
-
-
+// Validación para CUSTOM Tip
 function tipInputFun() {
-    tipValue = parseFloat(tipCustom.value) / 100 || 0;
-    tips.forEach(function(val) {
-        val.classList.remove("active-tip");
-    });
-    calculateTip();
-}
-
-function handleClick(event) {
-    tips.forEach(function(val) {
-        val.classList.remove("active-tip");
-        if (event.target.innerHTML == val.innerHTML) {
-            val.classList.add("active-tip");
-            tipValue = parseFloat(val.innerHTML) / 100;
+    if (tipCustom.value.trim() === "") {
+        tipValue = 0.15; // Restaurar al valor predeterminado
+        tipCustom.classList.remove("error-input");
+    } else {
+        let inputValue = parseFloat(tipCustom.value);
+        if (isNaN(inputValue) || inputValue < 0) {
+            tipCustom.classList.add("error-input");
+            tipCustom.value = "";
+        } else {
+            tipCustom.classList.remove("error-input");
+            tipValue = inputValue / 100;
         }
-    });
+    }
+
+    tips.forEach(val => val.classList.remove("active-tip"));
     calculateTip();
 }
 
+// Función para manejar clics en los botones de propinas
+function handleClick(event) {
+    tips.forEach(val => val.classList.remove("active-tip"));
+    event.target.classList.add("active-tip");
+    tipValue = parseFloat(event.target.innerHTML) / 100;
+    tipCustom.value = "";
+    tipCustom.classList.remove("error-input");
+    calculateTip();
+}
+
+// Cálculo de la propina
 function calculateTip() {
     if (peopleValue >= 1) {
         let tipAmount = (billValue * tipValue) / peopleValue;
@@ -93,28 +99,40 @@ function calculateTip() {
     }
 }
 
+// Función para el botón RESET
 function reset() {
-    billInput.value = "0.0";
-    billInputFun();
-    peopleInput.value = "1";
-    peopleInputFun();
+    billInput.value = "";
+    peopleInput.value = "";
     tipCustom.value = "";
+    tipPerPerson.innerHTML = "$0.00";
+    totalPerPerson.innerHTML = "$0.00";
+
+    billInput.classList.remove("error-input");
+    peopleInput.classList.remove("error-input");
+    tipCustom.classList.remove("error-input");
+
+    calculateTip();
 }
 
-billInput.addEventListener("focus", function() {
-    billInput.placeholder = "";
-});
-
-billInput.addEventListener("blur", function() {
-    if (billInput.value.trim() === "") {
-        billInput.placeholder = "0.0";
+// Evitar que los usuarios escriban valores negativos
+tipCustom.addEventListener("input", function () {
+    if (this.value.includes("-")) {
+        this.value = this.value.replace("-", ""); 
     }
 });
 
-tipCustom.addEventListener("focus", function() {
-    tipCustom.placeholder = "";
+// Mejor manejo de placeholders
+billInput.addEventListener("focus", () => billInput.placeholder = "");
+billInput.addEventListener("blur", () => {
+    if (billInput.value.trim() === "") billInput.placeholder = "0";
 });
 
-tipCustom.addEventListener("blur", function() {
+peopleInput.addEventListener("focus", () => peopleInput.placeholder = "");
+peopleInput.addEventListener("blur", () => {
+    if (peopleInput.value.trim() === "") peopleInput.placeholder = "1";
+});
+
+tipCustom.addEventListener("focus", () => tipCustom.placeholder = "");
+tipCustom.addEventListener("blur", () => {
     tipCustom.placeholder = "CUSTOM";
 });
